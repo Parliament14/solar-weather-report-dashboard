@@ -7,18 +7,21 @@ import pyttsx3
 import datetime
 from gtts import gTTS
 import os 
+import selenium
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+
+
 
 ## Todo: 
-#   Build API 
+#   Build API key gen
 #   Build poller 
-#   Integrate voice-command functionality  
+#   Integrate voice-command functionality  // possibly // maybe jsut dashboard
 #   Speed up request + response time 
 #   Figure out a better way to store all this data
-
-nasa_api_key = "xfgp244Iz1GK1Bbk1eG32doMCb9NgafoW0efmNqt"
-
-print(Fore.GREEN + f'NASA API Key: {nasa_api_key}')
-print(Style.RESET_ALL)
 
 def build_datetime(): 
     today = datetime.date.today()
@@ -57,10 +60,13 @@ def get_solar_flare_data(nasa_api_key: str, time: dict) -> dict:
     print(Fore.YELLOW + "CME data retrieved")
     print(Style.RESET_ALL)
     return data
-
-
-def speak_text(text: str): 
-    audio = gTTS(text=text, lang="en", slow=False)
-    audio.save("speech.mp3") 
-    os.system("mpg321 speech.mp3")
+    
+def get_nasa_api_key() -> dict: 
+    browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    browser.get("https://api.nasa.gov/")
+    firstname_element = browser.find_element(By.NAME, "user_first_name")
+    firstname_element.clear()
+    firstname_element.send_keys("testing dashboard")
+    firstname_element.send_keys(Keys.RETURN)
+    browser.close()
     
