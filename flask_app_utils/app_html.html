@@ -1,0 +1,27 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        This page will display solar system weather data gathered from NASA open APIs.
+    </head>
+    <body>
+        <h1> NEO Data </h1>
+        <script>src="https://www.gstatic.com/charts/loader.js"></script>
+        <div id="neo_chart" style="max-width:700px; height: 400px"></div>
+        <script type="text/javascript">
+            google.charts.load('current',{packages:['table', 'corechart']})
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart(){ 
+                var data = google.visualization.arrayToDataTable([
+                ['Near-Earth Object Count', 'Time (days)'], 
+                [30, 7], [48, 2], [70,8]
+                ]);
+                var options = {
+                    title: "Near-Earth Objects Detected this week" 
+                };
+                var chart = new google.visualization.LineChart(document.getElementById('neo_chart'));
+                chart.draw(data, options)
+            }
+        </script>
+    </body>
+</html>
