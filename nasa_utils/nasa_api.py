@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-
+from pathlib import Path 
 
 
 ## Todo: 
@@ -19,8 +19,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 #   Integrate voice-command functionality  // possibly // maybe jsut dashboard
 #   Speed up request + response time 
 #   Figure out a better way to store all this data
-nasa_api_key = "xfgp244Iz1GK1Bbk1eG32doMCb9NgafoW0efmNqt" ## Please don't abuse me :)
+#   See if you can obfuscate the requests to nasa into a single function. Then you need to pass just the endpoint, time, and api key (See NTB) 
 
+# Globals 
+path = str(Path.cwd()) + "\\api_key.txt" 
+with open(path) as f: 
+    nasa_api_key = f.read()
+    
+    
 def build_datetime(): 
     today = datetime.date.today()
     last_week = today - datetime.timedelta(days=1)

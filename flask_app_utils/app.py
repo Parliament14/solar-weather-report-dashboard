@@ -1,4 +1,5 @@
 from flask import Flask 
+from nasa_utils.nasa_api import get_neo_data
 
 
 ### Compnents 
@@ -17,8 +18,12 @@ from flask import Flask
 # Responsible for flow of data in the application 
 
 app = Flask(__name__)
-@app.route("/mysite") ## This is a decorator that tells flask that this function is associated with the 'mysite' endpoint. This allows flaks to know which requests to respond to
+@app.route("/mysite") ## This is a decorator that tells flask that this function is associated with the 'mysite' endpoint. This allows flaks to know which requests to respond 
 def hello(): 
     return "Hello, world!"
 
-# To run, type flask run in the console 
+# Consider a cache decorator under functools 
+
+# To run, type 'flask run' in the console 
+
+## Internals 
