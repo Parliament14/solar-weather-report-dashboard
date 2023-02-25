@@ -23,7 +23,7 @@ import logging
 #   See if you can obfuscate the requests to nasa into a single function. Then you need to pass just the endpoint, time, and api key (See NTB) 
 
 # Globals 
-path = str(Path.cwd()) + "\\api_key.txt" 
+path = str(Path.cwd()) + "/api_key.txt" 
 with open(path) as f: 
     nasa_api_key = f.read()
 logging.basicConfig(filename="nasa_api.log", level=logging.CRITICAL)
