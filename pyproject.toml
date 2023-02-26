@@ -6,6 +6,16 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+colorama = "^0.4.6"
+requests = "^2.28.2"
+DateTime = "^5.0"
+selenium = "^4.8.2"
+webdriver-manager = "^3.8.5"
+pathlib = "^1.0.1"
+numpy = "^1.24.2"
+pandas = "^1.5.3"
+dash = "^2.8.1"
+nasa-api = "^0.0.2"
 
 [tool.poetry.dev-dependencies]
 

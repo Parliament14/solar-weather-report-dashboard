@@ -1,15 +1,7 @@
 #!/usr/bin/python3
 from colorama import Fore, Back, Style
 import requests
-import json 
 import datetime
-import os 
-import selenium
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
 from pathlib import Path 
 import logging 
 
@@ -68,7 +60,6 @@ def send_nasa_request(nasa_api_key: str, endpoint: str):
 
 def get_neo_data(nasa_api_key: str) -> dict:
     logging.info(f'Fetching near-earth object data...')
-    print("test")
     data = send_nasa_request(endpoint="neo", nasa_api_key=nasa_api_key)
     logging.info(f'near earth object data retrieved.')
     return data
@@ -86,15 +77,6 @@ def get_solar_flare_data(nasa_api_key: str, time: dict) -> dict:
     logging.info(Fore.YELLOW + "CME data retrieved")
     logging.info(Style.RESET_ALL)
     return data
-    
-def get_nasa_api_key() -> dict: 
-    browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    browser.get("https://api.nasa.gov/")
-    firstname_element = browser.find_element(By.NAME, "user_first_name")
-    firstname_element.clear()
-    firstname_element.send_keys("testing dashboard")
-    firstname_element.send_keys(Keys.RETURN)
-    browser.close()
 
 def get_neo_object_value(time: dict, neo_data: dict) -> list: 
     values = []
@@ -123,3 +105,4 @@ def get_neo_object_properties() -> dict:
     data = get_neo_object_value(neo_data=neo_data, time=build_datetime())
     objects = dict(list(enumerate(data)))
     return objects
+
