@@ -2,7 +2,7 @@ from dash import Dash, html, dcc
 import plotly.express as px 
 import pandas as pd 
 import datetime 
-from nasa_api import get_neo_object_properties, get_neo_object_value, get_neo_data
+from nasa_api import get_neo_object_properties, get_neo_object_value, get_neo_data, sort_neo_data_by_velocity
 from pathlib import Path
 
 
@@ -18,7 +18,12 @@ with open(path) as f:
 
 app = Dash(__name__) 
 
-neo_data = get_neo_object_properties()
+colors = {
+    'background': '#000000',
+    'text': '#8C6BBE'
+
+}
+neo_data = sort_neo_data_by_velocity()
 
 def get_asteroid_names() -> list: 
     neo_data = get_neo_object_properties()
@@ -39,23 +44,44 @@ def get_neo_velocity() -> list:
     velocity = []
     for i in range(len(neo_data)): 
         velocity.append(neo_data[i]['close_approach_data'][0]['relative_velocity']['miles_per_hour'])
-    return velocity 
+    return velocity
 
-
+names = get_asteroid_names()
+velocity = get_neo_velocity()
+hazard = get_hazard_status()
 df = pd.DataFrame({
-    "Object Name": get_asteroid_names(),
-    "Velocity (mph)": get_neo_velocity(),
-    "Hazard": get_hazard_status()
+    "Object Name": names,
+    "Velocity (mph)": velocity,
+    "Hazard": hazard,
 })
 fig = px.bar(df, x="Object Name", y="Velocity (mph)", color="Hazard", barmode="group")
 
-app.layout = html.Div(children=[
-    html.H1(children="Near Earth Objects"), 
+fig.update_layout(
+    plot_bgcolor=colors['background'],
+    paper_bgcolor=colors['background'],
+    font_color=colors['text']
+)
+app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
+    html.H1(
+        children="Near Earth Objects", 
+        style={
+            'textAlign': 'center',
+            'background': colors['background'], 
+            'color': colors['text']
+        }
+    ), 
 
-    html.Div(children='''
-        Currently a dashboard displaying near-earth objects and their relative velocity. 
-        Also note, the graphs will indicate if the asteroid is marked as potentially hazardous or not. 
-    '''), 
+    html.Div(
+        children=
+            '''
+            Currently a dashboard displaying near-earth objects and their relative velocity. 
+            Also note, the graphs will indicate if the asteroid is marked as potentially hazardous or not. 
+            ''', 
+        style={
+            'textAlign': 'center', 
+            'color': colors['text']
+        }
+    ), 
 
     dcc.Graph(
         id="example-graph", 

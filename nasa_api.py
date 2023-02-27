@@ -106,3 +106,14 @@ def get_neo_object_properties() -> dict:
     objects = dict(list(enumerate(data)))
     return objects
 
+def sort_neo_data_by_velocity(): 
+    neo_data = get_neo_object_properties()
+    for i in range(len(neo_data.keys())): 
+        already_sorted = True
+        for j in range(len(neo_data.keys()) - i - 1): 
+            if neo_data[j]['close_approach_data'][0]['relative_velocity']['kilometers_per_hour'] > neo_data[j + 1]['close_approach_data'][0]['relative_velocity']['kilometers_per_hour']: 
+                neo_data[j], neo_data[j+1] = neo_data[j+1], neo_data[j]
+                already_sorted = False 
+        if already_sorted: 
+            break 
+    return neo_data
