@@ -54,6 +54,8 @@ df = pd.DataFrame({
     "Velocity (mph)": velocity,
     "Hazard": hazard,
 })
+
+df = df.sort_values(by=["Velocity (mph)"])
 fig = px.bar(df, x="Object Name", y="Velocity (mph)", color="Hazard", barmode="group")
 
 fig.update_layout(
