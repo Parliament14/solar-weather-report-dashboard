@@ -56,12 +56,16 @@ df = pd.DataFrame({
 })
 
 df = df.sort_values(by=["Velocity (mph)"])
-fig = px.bar(df, x="Object Name", y="Velocity (mph)", color="Hazard", barmode="group")
+fig1 = px.bar(df, x="Object Name", y="Velocity (mph)", color="Hazard", barmode="group")
 
-fig.update_layout(
+fig1.update_layout(
     plot_bgcolor=colors['background'],
     paper_bgcolor=colors['background'],
     font_color=colors['text']
+)
+
+fig2 = px.scatter(
+    df, x="Object Name", y="Velocity (mph)", color="Hazard", log_x=True, size_max=60
 )
 app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
     html.H1(
@@ -86,8 +90,12 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
     ), 
 
     dcc.Graph(
-        id="example-graph", 
-        figure=fig
+        id="neo-bar-chart", 
+        figure=fig1
+    ),
+    dcc.Graph(
+        id="neo-scatter-plot", 
+        figure=fig2
     )
 ])
 
